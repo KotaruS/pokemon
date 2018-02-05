@@ -5,13 +5,12 @@ include_once 'header.php';
   #root {
     font-family: 'Open Sans', sans-serif;
     font-size: 4em;
-    text-shadow: -5px 5px 0px #252eff, -10px 10px 0px #f0ff00;
+
   }
   a {
     font-family: 'Open Sans', sans-serif;
     font-size: 3em;
-    text-shadow: -5px 5px 0px #f0ff00;
-    color: black;
+  
     text-decoration: none;
   }
   </style>
