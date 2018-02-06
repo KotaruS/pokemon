@@ -1,16 +1,23 @@
 .cardo {
   box-shadow: 0px 2px 5px 2px rgba(128, 128, 128, 0.23);
   margin: .75rem;
+  transition: .3s ease-in-out;
 }
-.close-btn {
-  position: relative !important;
-  top: 5px !important;
-  float: right !important;
-  right: 3px !important;
-  padding: 2px 3px 4px 3.5px !important;
-  color: rgba(0, 0, 0, 0.61) !important;
-  border: 1px solid rgba(0, 0, 0, 0.42) !important;
-  border-radius: 100% !important;
-  font-size: 0.5em !important;
-
+.btns {
+  position: relative;
+  top: 5px;
+  float: right;
+  margin: 0 2px;
+  right: 3px;
+  padding: 2px 3px 4px 3.5px;
+  color: rgba(0, 0, 0, 0.61);
+  font-size: 0.6em;
+  opacity: 0;
+  transition: .3s ease-in-out;
+}
+.cardo:hover {
+  filter: brightness(90%);
+}
+.cardo:hover  .btns {
+  opacity: 1;
 }

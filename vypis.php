@@ -28,8 +28,11 @@ foreach ($pokemons as $pokemon) {
 ?>
 <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-0 ">
 <div class="cardo bg-white rounded">
-<span class="close-btn oi oi-x" title="x" aria-hidden="true"></span>
-<img class='mw-100' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
+<a href="#"><span class="btns oi oi-x" title="delete" aria-hidden="true"></span></a>
+<a href="#"><span class="btns oi oi-pencil" title="edit" aria-hidden="true"></span></a>
+<a href="<?php # TO DO odkaz na pokemona detail ?>">
+<img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
+</a>
 <div class="content p-2 bg-light rounded">
 <h4 class="px-2"><?php echo $pokemon['nazev'];?></h4>
 
@@ -46,7 +49,7 @@ foreach ($pokemons as $pokemon) {
     echo "<div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2  text-center p-0 rounded bgcolor-" . strtolower($onetype['nazev_typu']) . "'>" . $onetype['nazev_typu'] . "</div>" ;
   }
   echo "";
-  echo "</div></div> <div class='footer p-2 bg-secondary'>aaa</div> </div></div>";
+  echo "</div></div></div></div>";
 //konec jednotlive karty
 
   if($pokemon['id'] % 4 == 0) {echo "</div> <div class='row'>";}
