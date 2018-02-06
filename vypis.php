@@ -28,6 +28,7 @@ foreach ($pokemons as $pokemon) {
 ?>
 <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-0 ">
 <div class="cardo bg-white rounded">
+<span class="close-btn oi oi-x" title="x" aria-hidden="true"></span>
 <img class='mw-100' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
 <div class="content p-2 bg-light rounded">
 <h4 class="px-2"><?php echo $pokemon['nazev'];?></h4>
