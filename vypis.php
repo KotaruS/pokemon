@@ -5,7 +5,7 @@
   <title>Pokédex - Your best source of information</title>
   <link rel="stylesheet" type="text/css" href="vyp.css">
 <?php
-
+$numba = 0;
 
       $db = connection();
       $sql = 'SELECT * FROM pokemon;';
@@ -19,14 +19,20 @@
   ?>
 </head>
 <body>
-  <div class="container">
-    <div class="row">
+<div class="container">
+
+
 
 <?php
+// vypis v kartickach
 foreach ($pokemons as $pokemon) {
-//  var_dump($pokemon);
+
+if(($pokemon['id']-1) % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
+ echo "<div class='row'>";
+ $numba = $pokemon['id'];
+}
 ?>
-<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-0 ">
+<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-0 id-<?php echo $pokemon['id'];?>">
 <div class="cardo bg-white rounded">
 <a href="#"><span class="btns oi oi-x" title="delete" aria-hidden="true"></span></a>
 <a href="#"><span class="btns oi oi-pencil" title="edit" aria-hidden="true"></span></a>
@@ -48,13 +54,13 @@ foreach ($pokemons as $pokemon) {
     //var_dump($onetype);
     echo "<div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2  text-center p-0 rounded bgcolor-" . strtolower($onetype['nazev_typu']) . "'>" . $onetype['nazev_typu'] . "</div>" ;
   }
-  echo "";
+//  echo "";
   echo "</div></div></div></div>";
 //konec jednotlive karty
 
-  if($pokemon['id'] % 4 == 0) {echo "</div> <div class='row'>";}
+  if($pokemon['id'] % 4 == 0) {echo "</div>";}
 }
  ?>
-</div>
+
   </div>
 <?php include_once 'footer.php'; ?>
