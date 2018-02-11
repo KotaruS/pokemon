@@ -7,13 +7,35 @@
 <?php
 $numba = 0;
 $counter = 0;
-
       $db = connection();
+
+
+      if(isset($_GET['typ'])) {
+        $typus = $_GET['typ'];
+        $typek = implode(',', $typus);
+        var_dump($typek);
+        echo $typek;
+        $sql = 'SELECT pokemon.id, pokemon.nazev, pokemon.popis, pokemon.obrazek, GROUP_CONCAT(typ_id ORDER BY typ_id ASC) as type FROM `pokemon_typ` JOIN pokemon ON pokemon_id = pokemon.id GROUP BY pokemon_id HAVING type LIKE :type OR type LIKE :type1 OR type LIKE :type2;';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+          ':type' => '%,' . $typek,
+          ':type1' => $typek . ',%',
+          ':type2' => $typek]);
+        $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      } else {
+
       $sql = 'SELECT * FROM pokemon;';
       $stmt = $db->prepare($sql);
       $stmt->execute();
       $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
     //  var_dump($pokemons);
+      $sql2 = 'SELECT * FROM pokemon_typ;';
+      $stmt2 = $db->prepare($sql2);
+      $stmt2->execute();
+      $poketypes = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+      }
+
       $sql3 = 'SELECT * FROM typ;';
       $stmt3 = $db->prepare($sql3);
       $stmt3->execute();
@@ -24,18 +46,13 @@ $counter = 0;
       $stmt4->execute();
       $humans_filter = $stmt4->fetchAll(PDO::FETCH_ASSOC);
 
-      // if(isset($_GET['typ'])) {
-      //   $typy = $_GET['typ'];
-      //   $typ = implode(',' $typy)
-      //     var_dump($typ);
-      //   }
-      //
+
   ?>
 </head>
 <body>
 <div class="container">
 
-<div class="row bg-primary">
+<div class="row bg-primary mb-4">
   <form method="get" class="col-12">
     <input type="search" name="search"><button type="submit" name="submit">Bitch</button>
   </form>
@@ -84,6 +101,26 @@ $counter = 0;
 
 <?php
 // vypis
+if(empty($pokemons)) { ?>
+  <div class="alert alert-warning " role="alert">
+    Unfortunately there is no pokemon with type<?php if((count($typus)) <= 1) {echo ': ';} else {echo 's: ';}?>
+<?php
+foreach ($types_filter as $type) {
+  if((count($typus)) <= 1) {
+    if($type['id']==$typus[0]) {
+      echo "<strong>" . $type['nazev_typu'] . "</strong> ";
+    }
+  } else {
+    foreach ($typus as $taipey) {
+      if($type['id']==$taipey) {
+        echo "<strong>" . $type['nazev_typu'] . "</strong> ";
+      }
+    }
+  }
+}
+
+?>  </div>
+<?php } else {
 foreach ($pokemons as $pokemon) {
 
 if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
@@ -92,7 +129,7 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 ?>
 <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-0 id-<?php echo $pokemon['id'];?>">
 <div class="cardo bg-white rounded">
-<a href="#"><span class="btns oi oi-x" title="delete" aria-hidden="true"></span></a>
+<a href="delete.php?delete=<?php echo $pokemon['id'] ?> "><span class="btns oi oi-x" title="delete" aria-hidden="true"></span></a>
 <a href="#"><span class="btns oi oi-pencil" title="edit" aria-hidden="true"></span></a>
 <a href="<?php # TO DO odkaz na pokemona detail ?>">
 <img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
@@ -103,10 +140,10 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 
   <div class="row m-0">
 <?php
-  $sql2 = 'SELECT nazev_typu FROM `pokemon_typ` JOIN typ ON pokemon_typ.typ_id = typ.id WHERE pokemon_id = :id;';
-  $stmt2 = $db->prepare($sql2);
-  $stmt2->execute([':id' => $pokemon['id']]);
-  $types = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+  $sql1 = 'SELECT nazev_typu FROM `pokemon_typ` JOIN typ ON pokemon_typ.typ_id = typ.id WHERE pokemon_id = :id;';
+  $stmt1 = $db->prepare($sql1);
+  $stmt1->execute([':id' => $pokemon['id']]);
+  $types = $stmt1->fetchAll(PDO::FETCH_ASSOC);
   foreach ($types as $type) {
     //echo $type['nazev_typu'];
     //var_dump($type);
@@ -120,6 +157,7 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
    $counter++;
 }
 $counter = 0;
+}
  ?>
 
   </div>
