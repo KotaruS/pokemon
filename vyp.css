@@ -31,7 +31,7 @@
     text-align: center;
     border-radius: 10rem;
     cursor: pointer;
-    min-width: 7.5rem;
+    min-width: 6rem;
     font-size: 1em;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -93,7 +93,58 @@
     border-radius: 100%;
     border: 0.5rem solid white;
 }
+.lidi {
+  min-width: 7rem;
+}
+.bg-human {
+  background: var(--purple);
+  color: white;
+}
+.sibmit {
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  outline: none;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+.sibmit:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 4px rgba(255,255,255,0.25);
+}
+.sibmit span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s ease;
+}
 
+.sibmit span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  color: rgba(255,255,255,0.6);
+  right: -20px;
+  transition: 0.5s ease;
+}
+
+.sibmit:hover span {
+  padding-right: 15px;
+}
+
+.sibmit:hover span:after {
+  opacity: 1;
+  right: 0px;
+}
+@media screen and (max-width: 425px) {
+  .col-xs-12 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
 @media screen and (max-width: 575.98px ) {
    html {
      font-size: 1.4rem;
@@ -118,18 +169,24 @@
    html {
      font-size: 1rem;
    }
+   .sibmit:hover span:after {
+     opacity: 1;
+     right: 5px;
+   }
    .checkmark {
      top: 0.25rem;
      left: 0.25rem;
      height: 1.5rem;
      width: 1.5rem;
-     box-shadow: inset 0 0 0 2px rgba(255,255,255,0.8);
    }
    .typ_nazev .checkmark:after {
      border: 0.3rem solid white;
    }
 }
 @media screen and (min-width: 992px ) {
+   .typ_nazev {
+     min-width: 7.5rem;
+   }
    .checkmark {
      top: 0.35rem;
      left: 0.35rem;
@@ -140,6 +197,6 @@
 
 @media screen and (min-width: 1200px ) {
    .typ_nazev {
-     min-width: 8rem;
+     min-width: 8.2rem;
    }
 }
