@@ -2,6 +2,15 @@
   margin: 0;
   padding: 0;
 }
+:root {
+  --txt-main: #8786ac;
+  --txt-accent: #737297;
+  --bg-main: #38374c;
+  --bg-accent: #2d2c3a;
+  --bg-darker: #191929;
+  --bg-body: #232234;
+  --border-accent: #48475f;
+}
 .bgcolor-bug {
   background: #729f3f;
   color: white;

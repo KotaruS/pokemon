@@ -9,7 +9,9 @@ $numba = 0;
 $counter = 0;
       $db = connection();
 
-
+      if(isset($_GET['search'])) {
+        # code...
+      }
       if(isset($_GET['typ'])) {
         $typus = $_GET['typ'];
         $typek = implode(',', $typus);
@@ -29,7 +31,7 @@ $counter = 0;
       $stmt = $db->prepare($sql);
       $stmt->execute();
       $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    //  var_dump($pokemons);
+
       $sql2 = 'SELECT * FROM pokemon_typ;';
       $stmt2 = $db->prepare($sql2);
       $stmt2->execute();
@@ -51,15 +53,16 @@ $counter = 0;
 </head>
 <body>
 <div class="container">
-
-<div class="row bg-primary mb-4">
-  <form method="get" class="col-12">
-    <input type="search" name="search"><button type="submit" name="submit">Bitch</button>
+<div class="row bg-filters rounded-bottom py-1 mb-4">
+  <form method="get" class="col-12 p-3">
+   <div class="input-group col-lg-11 mx-auto">
+    <input class="searchbar-main form-control" type="search" name="search" placeholder="Search for pokemon..." autocomplete="off" ><span class="search-icon oi oi-magnifying-glass" aria-hidden="true"></span>
+   </div>
   </form>
   <form class="row m-0 p-2">
 
   <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 ">
-    <h3 class="p-1">Types:</h3><div class="w-100"></div>
+    <h3 class="p-1 color-main">Types:</h3><div class="w-100"></div>
     <?php foreach ($types_filter as $type_filter)
      {
 
@@ -79,7 +82,7 @@ $counter = 0;
      ?>
    </div>
    <div class="row col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 m-0">
-     <h3 class="p-1" >Trainers:</h3><div class="w-100"></div>
+     <h3 class="p-1 color-main">Trainers:</h3><div class="w-100"></div>
      <?php foreach ($humans_filter as $human_filter)
       {
     //  if(($human_filter['id']-1) % 6 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) { echo '<div class="row">';}
@@ -102,7 +105,7 @@ $counter = 0;
 <?php
 // vypis
 if(empty($pokemons)) { ?>
-  <div class="alert alert-warning " role="alert">
+  <div class="alert alert-dark" role="alert">
     Unfortunately there is no pokemon with type<?php if((count($typus)) <= 1) {echo ': ';} else {echo 's: ';}?>
 <?php
 foreach ($types_filter as $type) {
@@ -128,14 +131,14 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 }
 ?>
 <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-0 id-<?php echo $pokemon['id'];?>">
-<div class="cardo bg-white rounded">
-<a href="delete.php?delete=<?php echo $pokemon['id'] ?> "><span class="btns oi oi-x" title="delete" aria-hidden="true"></span></a>
+<div class="cardo bg-main rounded ">
+<a href="delete.php?delete=<?php echo $pokemon['id'] ?> "><span class="btns oi oi-x" title="Are you sure you want to delete this pokemon?" aria-hidden="true"></span></a>
 <a href="#"><span class="btns oi oi-pencil" title="edit" aria-hidden="true"></span></a>
 <a href="<?php # TO DO odkaz na pokemona detail ?>">
 <img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
 </a>
-<div class="content p-2 bg-light rounded">
-<h4 class="px-2"><?php echo $pokemon['nazev'];?></h4>
+<div class="content px-2 py-3 bg-accent rounded-bottom">
+<h4 class="px-2 color-accent"><?php echo $pokemon['nazev'];?></h4>
 
 
   <div class="row m-0">
