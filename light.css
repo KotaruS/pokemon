@@ -1,0 +1,17 @@
+:root {
+  --txt-main: #111111;
+  --txt-accent: #505050;
+  --bg-main: #fff;
+  --bg-accent: #f8f9fa;
+  --bg-darker: #7b9eff;
+  --bg-body: #ffffff;
+  --border-accent: #484658;
+  --btn-main: #4937b1;
+  --btn-color: #fff;
+  --btns: rgba(62, 62, 66, 0.6);
+  --basic: #fff;
+  --reverse: #000;
+}
+.cardo {
+  box-shadow: 0px 2px 5px 2px rgba(128, 128, 128, 0.23);
+}

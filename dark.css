@@ -1,0 +1,14 @@
+:root {
+  --txt-main: #8786ac;
+  --txt-accent: #737297;
+  --bg-main: #38374c;
+  --bg-accent: #2d2c3a;
+  --bg-darker: #191929;
+  --bg-body: #232234;
+  --border-accent: #48475f;
+  --btn-main: #222055;
+  --btn-color: #fff;
+  --btns: rgba(135, 134, 172, 0.6);
+  --basic: #000;
+  --reverse: #fff;
+}

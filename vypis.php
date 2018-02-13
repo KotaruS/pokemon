@@ -5,18 +5,31 @@
   <title>Pokédex - Your best source of information</title>
   <link rel="stylesheet" type="text/css" href="vyp.css">
 <?php
+if (isset($_COOKIE['theme'])) {
+  $odkaz = ($_COOKIE['theme'] == 'dark') ? 'dark' : 'light';
+  switch ($_COOKIE['theme']) {
+    case 'dark':
+      echo '<link rel="stylesheet" type="text/css" href="dark.css">';
+      break;
+
+    case 'light':
+      echo '<link rel="stylesheet" type="text/css" href="light.css">';
+      break;
+  }
+} else
+{
+  echo '<link rel="stylesheet" type="text/css" href="light.css">';
+$odkaz = 'light';
+}
 $numba = 0;
 $counter = 0;
       $db = connection();
 
-      if(isset($_GET['search'])) {
-        # code...
-      }
+
       if(isset($_GET['typ'])) {
         $typus = $_GET['typ'];
         $typek = implode(',', $typus);
-        var_dump($typek);
-        echo $typek;
+
         $sql = 'SELECT pokemon.id, pokemon.nazev, pokemon.popis, pokemon.obrazek, GROUP_CONCAT(typ_id ORDER BY typ_id ASC) as type FROM `pokemon_typ` JOIN pokemon ON pokemon_id = pokemon.id GROUP BY pokemon_id HAVING type LIKE :type OR type LIKE :type1 OR type LIKE :type2;';
         $stmt = $db->prepare($sql);
         $stmt->execute([
@@ -25,6 +38,13 @@ $counter = 0;
           ':type2' => $typek]);
         $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+      } else if(isset($_GET['search'])) {
+        $boi = $_GET['search'];
+        $sql = 'SELECT * FROM pokemon WHERE nazev LIKE :nazev';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+          ':nazev' => '%' . $boi . '%']);
+        $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
       } else {
 
       $sql = 'SELECT * FROM pokemon;';
@@ -47,11 +67,16 @@ $counter = 0;
       $stmt4 = $db->prepare($sql4);
       $stmt4->execute();
       $humans_filter = $stmt4->fetchAll(PDO::FETCH_ASSOC);
+//
+// if (je to jedna) {
+//   # link black css...
+// }
 
 
   ?>
 </head>
 <body>
+<a class="theme-toggle rounded-left" href="handler.php?theme=<?php echo $odkaz;?>" ><span class="oi oi-droplet" aria-hidden="true"></span></a>
 <div class="container">
 <div class="row bg-filters rounded-bottom py-1 mb-4">
   <form method="get" class="col-12 p-3">
@@ -98,14 +123,21 @@ $counter = 0;
       }
       ?>
     </div>
-   <div class="col-12 col-md-10 offset-md-1 col-lg-2 offset-lg-10 pl-lg-4 pr-lg-2 py-lg-2 pr-xl-3 pl-xl-3" ><button type="submit" class="sibmit col-12 py-2"><span>Search</span></button></div>
+   <div class="col-12 col-md-10 offset-md-1 col-lg-2 offset-lg-10 pl-lg-4 pr-lg-2 py-lg-2 pr-xl-3 pl-xl-3" ><button type="submit" class="sibmit col-12 py-2"><span class="color-main">Submit</span></button></div>
   </form>
 </div>
 
 <?php
 // vypis
-if(empty($pokemons)) { ?>
-  <div class="alert alert-dark" role="alert">
+if(isset($_GET['search'])&& !empty($boi)&& !empty($pokemons)) {
+  echo "<h3 class='color-reverse' >Results containing <strong>'" . $boi . "'</strong> </h3>";
+}
+if(empty($pokemons)&& isset($_GET['search'])) {
+?>  <div class="alert alert-danger" role="alert">
+    Unfortunately there is no pokemon with name '<?php echo $boi;?>'
+<?php }
+if(empty($pokemons)&& isset($_GET['typ'])) { ?>
+  <div class="alert alert-danger" role="alert">
     Unfortunately there is no pokemon with type<?php if((count($typus)) <= 1) {echo ': ';} else {echo 's: ';}?>
 <?php
 foreach ($types_filter as $type) {
