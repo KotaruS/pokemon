@@ -1,0 +1,93 @@
+.sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-main);
+}
+.description h1:after {
+  content: '';
+  width: 100%;
+  margin: 10px auto;
+  position: relative;
+  height: 1px;
+  border-radius: 2rem;
+  background: var(--border-main);
+  display: block;
+}
+.description h1 {
+  padding-bottom: 0.5rem;
+  color: var(--txt-main);
+}
+.description h3 {
+  padding-bottom: 0.25rem;
+  color: var(--txt-main);
+}
+.section h4 {
+  padding-bottom: 0.5rem;
+  display: block;
+  color: var(--txt-main);
+}
+.description p {
+  color: var(--txt-accent);
+}
+.section {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.45);
+
+}
+.description {
+  background: var(--bg-accent);
+}
+.human {
+  position: relative;
+  text-align: center;
+  border-radius: 10rem;
+  cursor: pointer;
+  min-width: 6rem;
+  font-size: 1em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: 0.5s ease;
+}
+
+.footerino {
+  border-top: 3px solid rgba(0, 0, 0, 0.12);
+  background: var(--bg-darker);
+}
+.btn-accent {
+  background: var(--btn-accent);
+  color: white;
+}
+.btn-accent:hover {
+  background: var(--btn-hover);
+}
+.btn .oi {
+  font-size: 0.8rem;
+}
+@media screen and (min-width: 576px) {
+  .section {
+    border-radius: 0.5rem;
+  }
+  .sidebar {
+    border-radius: 0.5rem 0.5rem 0 0 ;
+  }
+  .footerino {
+    border-radius: 0 0 0.5rem 0.5rem;
+
+  }
+}
+@media screen and (min-width: 992px) {
+  .section {
+    border-radius: 0.5rem;
+  }
+  .sidebar {
+    border-radius: 0.5rem 0 0 0 ;
+  }
+  .description {
+    border-radius: 0 0.5rem 0 0;
+  }
+  .description h1 {
+    padding: 0.5rem 0;
+  }
+}

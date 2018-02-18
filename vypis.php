@@ -5,22 +5,7 @@
   <title>Pokédex - Your best source of information</title>
   <link rel="stylesheet" type="text/css" href="vyp.css">
 <?php
-if (isset($_COOKIE['theme'])) {
-  $odkaz = ($_COOKIE['theme'] == 'dark') ? 'dark' : 'light';
-  switch ($_COOKIE['theme']) {
-    case 'dark':
-      echo '<link rel="stylesheet" type="text/css" href="dark.css">';
-      break;
 
-    case 'light':
-      echo '<link rel="stylesheet" type="text/css" href="light.css">';
-      break;
-  }
-} else
-{
-  echo '<link rel="stylesheet" type="text/css" href="light.css">';
-$odkaz = 'light';
-}
 $numba = 0;
 $counter = 0;
       $db = connection();
@@ -44,6 +29,13 @@ $counter = 0;
         $stmt = $db->prepare($sql);
         $stmt->execute([
           ':nazev' => '%' . $boi . '%']);
+        $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      } else if(isset($_GET['clovek'])) {
+        $human = $_GET['clovek'];
+        $sql = 'SELECT * FROM `pokemon_clovek` JOIN pokemon ON pokemon_id = pokemon.id WHERE clovek_id = :clovek';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+          ':clovek' => $_GET['clovek']]);
         $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
       } else {
 
@@ -114,7 +106,7 @@ $counter = 0;
      ?>
        <div class="lidi col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 px-0 px-md-2 px-xl-1 mx-0 mb-1 mt-1">
         <label class="typ_nazev col-12 py-2 py-sm-2 py-md-1 bg-human" ><?php echo $human_filter['jmeno']; ?>
-        <input type="checkbox" name="clovek[]" value="<?php echo $human_filter['id']; ?>">
+        <input type="radio" name="clovek" value="<?php echo $human_filter['id']; ?>">
         <span class="checkmark"></span>
         </label>
        </div>
@@ -129,6 +121,11 @@ $counter = 0;
 
 <?php
 // vypis
+if(isset($_GET['typ']) && isset($_GET['clovek'])) {
+  //do nothing
+} else if(isset($_GET['clovek'])) {
+  echo "<h3 class='color-reverse'><strong>" . $humans_filter[$human-1]['jmeno'] . "'</strong>s pokemons:</h3>";
+}
 if(isset($_GET['search'])&& !empty($boi)&& !empty($pokemons)) {
   echo "<h3 class='color-reverse' >Results containing <strong>'" . $boi . "'</strong> </h3>";
 }
@@ -153,7 +150,6 @@ foreach ($types_filter as $type) {
     }
   }
 }
-
 ?>  </div>
 <?php } else {
 foreach ($pokemons as $pokemon) {
@@ -162,11 +158,11 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
  echo "<div class='row'>";
 }
 ?>
-<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-0 id-<?php echo $pokemon['id'];?>">
+<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-2 id-<?php echo $pokemon['id'];?>">
 <div class="cardo bg-main rounded ">
 <a href="delete.php?delete=<?php echo $pokemon['id'] ?> "><span class="btns oi oi-x" title="Are you sure you want to delete this pokemon?" aria-hidden="true"></span></a>
 <a href="#"><span class="btns oi oi-pencil" title="edit" aria-hidden="true"></span></a>
-<a href="<?php # TO DO odkaz na pokemona detail ?>">
+<a href="detail.php?pokeid=<?php echo $pokemon['id'];?>">
 <img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
 </a>
 <div class="content px-2 py-3 bg-accent rounded-bottom">
@@ -182,12 +178,29 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
   foreach ($types as $type) {
     //echo $type['nazev_typu'];
     //var_dump($type);
-    echo "<div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2  text-center p-0 rounded bgcolor-" . strtolower($type['nazev_typu']) . "'>" . $type['nazev_typu'] . "</div>" ;
+    echo "<div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2 text-center p-0 rounded bgcolor-" . strtolower($type['nazev_typu']) . "'>" . $type['nazev_typu'] . "</div>" ;
   }
 //  echo "";
   echo "</div></div></div></div>";
 //konec jednotlive karty
+//karta pridani pokemona
+  if ($counter+1 == count($pokemons)) {
+  ?>  <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-2 ">
+    <div class="cardo bg-main rounded unique">
+    <a><span class="btns oi oi-pencil invisible" title="edit" aria-hidden="true"></span></a>
+    <a href="add.php">
+    <img class='mw-100 pictur' src='images/blank.png' alt='add pokemon'>
+    <span class="add-plus oi oi-plus "  aria-hidden="true"></span>
+    <p class="add-text">Add pokemon</p>
+    <div class="content px-2 py-3 bg-accent invisible rounded-bottom">
+    <h4 class="px-2 color-accent">Add Pokemon</h4>
 
+
+      <div class="row m-0">
+      <div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2 bgcolor-fairy text-center p-0 rounded'>aaaa </div>
+
+  <?php    echo "</div></div></div></a></div>";
+  }
   if(($counter+1) % 4 == 0) {echo "</div>";}
    $counter++;
 }

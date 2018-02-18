@@ -3,10 +3,14 @@
   --txt-accent: #505050;
   --bg-main: #fff;
   --bg-accent: #f8f9fa;
-  --bg-darker: #7b9eff;
+  --bg-filters: #7b9eff;
+  --bg-darker: #ececec;
   --bg-body: #ffffff;
+  --border-main: rgba(84, 84, 84, 0.11);
   --border-accent: #484658;
   --btn-main: #4937b1;
+  --btn-accent: #4937b1;
+  --btn-hover: #6610f2;
   --btn-color: #fff;
   --btns: rgba(62, 62, 66, 0.6);
   --basic: #fff;

@@ -10,5 +10,5 @@ switch ($current) {
     setcookie('theme', 'dark', time() + (86400 * 365 * 3), "/");
     break;
 }
-header('Location: vypis.php');
+header('Location:' . $_SERVER['HTTP_REFERER']);
 ?>

@@ -2,7 +2,27 @@
   margin: 0;
   padding: 0;
 }
+.theme-toggle {
+  background: var(--btn-main);
+  box-shadow: 0 0 10px var(--btns);
+  color: var(--btn-color);
+  padding: 1rem 0.6rem;
+  position: fixed;
+  top: 20vh;
+  right: 0;
+  z-index: 100;
+}
+.theme-toggle span {
+  opacity: 0.8;
 
+}
+.theme-toggle:hover {
+  text-decoration: none;
+  color: var(--btn-color);
+}
+.theme-toggle:hover span {
+  opacity: 1;
+}
 .bgcolor-bug {
   background: #729f3f;
   color: white;

@@ -10,5 +10,20 @@
   <!-- Online CDN
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   -->
+<?php  if (isset($_COOKIE['theme'])) {
+    $odkaz = ($_COOKIE['theme'] == 'dark') ? 'dark' : 'light';
+    switch ($_COOKIE['theme']) {
+      case 'dark':
+        echo '<link rel="stylesheet" type="text/css" href="dark.css">';
+        break;
 
+      case 'light':
+        echo '<link rel="stylesheet" type="text/css" href="light.css">';
+        break;
+    }
+  } else {
+    echo '<link rel="stylesheet" type="text/css" href="light.css">';
+  $odkaz = 'light';
+  }
+?>
 <!-- </head> required -->
