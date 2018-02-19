@@ -221,6 +221,13 @@ body {
   opacity: 0.6;
   right: 0px;
 }
+footer {
+  background: var(--bg-darker);
+}
+.footerlink {
+  text-align: center;
+  font-size: 1.1rem;
+}
 @media screen and (max-width: 425px) {
   .col-xs-12 {
     -webkit-box-flex: 0;

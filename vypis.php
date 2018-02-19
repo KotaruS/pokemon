@@ -8,9 +8,9 @@
 
 $numba = 0;
 $counter = 0;
+
       $db = connection();
-
-
+      // Filtr pro typy pokemonu
       if(isset($_GET['typ'])) {
         $typus = $_GET['typ'];
         $typek = implode(',', $typus);
@@ -22,7 +22,7 @@ $counter = 0;
           ':type1' => $typek . ',%',
           ':type2' => $typek]);
         $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        // vyhledavani
       } else if(isset($_GET['search'])) {
         $boi = $_GET['search'];
         $sql = 'SELECT * FROM pokemon WHERE nazev LIKE :nazev';
@@ -30,6 +30,7 @@ $counter = 0;
         $stmt->execute([
           ':nazev' => '%' . $boi . '%']);
         $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //filtrovat podle cloveka
       } else if(isset($_GET['clovek'])) {
         $human = $_GET['clovek'];
         $sql = 'SELECT * FROM `pokemon_clovek` JOIN pokemon ON pokemon_id = pokemon.id WHERE clovek_id = :clovek';
@@ -68,8 +69,11 @@ $counter = 0;
   ?>
 </head>
 <body>
+  <!-- tmavy/svetly vzhled toggle -->
 <a class="theme-toggle rounded-left" href="handler.php?theme=<?php echo $odkaz;?>" ><span class="oi oi-droplet" aria-hidden="true"></span></a>
+
 <div class="container">
+  <!-- menu s filtry -->
 <div class="row bg-filters rounded-bottom py-1 mb-4">
   <form method="get" class="col-12 p-3">
    <div class="input-group col-lg-11 mx-auto">
@@ -126,17 +130,21 @@ if(isset($_GET['typ']) && isset($_GET['clovek'])) {
 } else if(isset($_GET['clovek'])) {
   echo "<h3 class='color-reverse'><strong>" . $humans_filter[$human-1]['jmeno'] . "'</strong>s pokemons:</h3>";
 }
+
 if(isset($_GET['search'])&& !empty($boi)&& !empty($pokemons)) {
   echo "<h3 class='color-reverse' >Results containing <strong>'" . $boi . "'</strong> </h3>";
 }
+
 if(empty($pokemons)&& isset($_GET['search'])) {
 ?>  <div class="alert alert-danger" role="alert">
-    Unfortunately there is no pokemon with name '<?php echo $boi;?>'
+    Unfortunately there is no pokemon with name '<?php echo $boi;?>'</div>
 <?php }
+
 if(empty($pokemons)&& isset($_GET['typ'])) { ?>
   <div class="alert alert-danger" role="alert">
     Unfortunately there is no pokemon with type<?php if((count($typus)) <= 1) {echo ': ';} else {echo 's: ';}?>
 <?php
+
 foreach ($types_filter as $type) {
   if((count($typus)) <= 1) {
     if($type['id']==$typus[0]) {
@@ -182,6 +190,10 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
   }
 //  echo "";
   echo "</div></div></div></div>";
+//   if(($counter+1) % 4 == 0) {echo "</div>";}
+//    $counter++;
+// }
+
 //konec jednotlive karty
 //karta pridani pokemona
   if ($counter+1 == count($pokemons)) {
@@ -208,5 +220,13 @@ $counter = 0;
 }
  ?>
 
+ </div>
+</div>
+  <footer class="container-fluid p-3 mt-2">
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="traineradd.php">Add trainer</a></div>
+    <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="add.php">Add pokemon</a></div>
+    <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="index.php">Landpage</a></div>
   </div>
+  </footer>
 <?php include_once 'footer.php'; ?>

@@ -70,22 +70,22 @@ $humans_filter = $stmt4->fetchAll(PDO::FETCH_ASSOC);
       //  if(($human_filter['id']-1) % 6 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) { echo '<div class="row">';}
        ?>
          <div class="col-6 col-sm-4 col-md-3 col-lg-2 px-2  px-xl-1  mb-1 mt-1">
+           <a class="notblue" href="trainer.php?trainid=<?php echo $human_filter['id']; ?>">
           <div class="human col-12 py-2 py-sm-2 py-md-1 bg-human" ><?php echo $human_filter['jmeno']; ?>
-
-
-
           </div>
-
+        </a>
      </div>
+
+
 <?php }?>
   </div>
     </div>
   </div>
-  <div class="buttons my-2">
+  <div class="my-2">
 
-  </div>
   <a href="vypis.php"><button type="button" class="btn btn-accent my-1" name="button"><span class="oi oi-action-undo pr-1" aria-hidden="true"></span>Back</button></a>
   <a href="edit.php"><button type="button" class="btn btn-primary my-1" name="button"><span class="oi oi-pencil pr-1" aria-hidden="true"></span>Edit</button></a>
   <a href="delete.php?delete=<?php echo $_GET['pokeid'];?>"><button type="button" class="btn btn-danger my-1" name="button"><span class="oi oi-trash pr-1" aria-hidden="true"></span>Delete</button></a>
+  </div>
 </div>
 <?php include_once 'footer.php'; ?>

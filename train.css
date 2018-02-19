@@ -1,0 +1,16 @@
+h1 {
+  color: var(--txt-main);
+}
+p {
+  color: var(--txt-accent);
+}
+.btn-accent {
+  background: var(--btn-accent);
+  color: white;
+}
+.btn-accent:hover {
+  background: var(--btn-hover);
+}
+.btn .oi {
+  font-size: 0.8rem;
+}
