@@ -25,5 +25,7 @@
     echo '<link rel="stylesheet" type="text/css" href="light.css">';
   $odkaz = 'light';
   }
+
+  $counter = 0;
 ?>
 <!-- </head> required -->

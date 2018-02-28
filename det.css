@@ -51,20 +51,12 @@
   user-select: none;
   transition: 0.5s ease;
 }
-.notblue {
-  color: white;
-}
+
 .footerino {
   border-top: 3px solid rgba(0, 0, 0, 0.12);
   background: var(--bg-darker);
 }
-.btn-accent {
-  background: var(--btn-accent);
-  color: white;
-}
-.btn-accent:hover {
-  background: var(--btn-hover);
-}
+
 .btn .oi {
   font-size: 0.8rem;
 }

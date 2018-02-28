@@ -6,24 +6,51 @@ body {
   /* box-shadow: 0px 2px 5px 2px rgba(128, 128, 128, 0.23);
   margin: .75rem; */
   transition: .3s ease-in-out;
+  border-radius: 0.5rem;
   /* border: 1px solid rgba(0, 0, 0, 0); */
+}
+.cardo:hover {
+  filter: var(--brightness);
+}
+
+.cardo:hover  .btns {
+  opacity: 1;
+}
+.content {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  transition: .3s ease-in-out;
 }
 .unique {
   border: 5px dashed var(--border-main);
 
 }
-
+.pictur {
+  object-fit: contain;
+  height: calc(100vw - 0.5rem);
+  /* height: 269px; */
+  /* height: 224px; */
+  /* height: 344px; */
+  /* height: 251px; */
+}
+#lastone {
+  height: calc(100vw - 0.5rem - 10px);
+}
 .btns {
-  position: relative;
-  top: 5px;
+  position: absolute;
+  top: 15px;
   float: right;
-  margin: 0 2px;
-  right: 3px;
   padding: 2px 3px 4px 3.5px;
   color: var(--btns);
   font-size: 0.6em;
   opacity: 0;
   transition: .3s ease-in-out;
+}
+.btn-1 {
+  right: 0.8rem;
+}
+.btn-2 {
+  right: 1.8rem;
 }
 .add-plus {
   position: absolute !important;
@@ -50,12 +77,7 @@ body {
   color: var(--txt-accent);
   text-align: center;
 }
-.cardo:hover {
-  filter: brightness(90%);
-}
-.cardo:hover  .btns {
-  opacity: 1;
-}
+
 .typ_nazev {
     position: relative;
     /*
@@ -161,6 +183,7 @@ body {
 }
 .color-accent {
   color: var(--txt-accent);
+  transition: color 0.3s ease-in-out;
 }
 .color-reverse {
   color: var(--reverse);
@@ -190,7 +213,7 @@ body {
   outline: none;
   transition: all 0.5s ease;
   cursor: pointer;
-  border-radius: 0.5rem;
+  border-radius: 0 0.25rem 0.25rem 0;
 }
 .sibmit:focus {
   outline: none;
@@ -221,13 +244,7 @@ body {
   opacity: 0.6;
   right: 0px;
 }
-footer {
-  background: var(--bg-darker);
-}
-.footerlink {
-  text-align: center;
-  font-size: 1.1rem;
-}
+
 @media screen and (max-width: 425px) {
   .col-xs-12 {
     -webkit-box-flex: 0;
@@ -255,6 +272,12 @@ footer {
    .typ_nazev .checkmark:after {
      border: 0.4rem solid white;
    }
+   .pictur {
+     height: 251px;
+   }
+   #lastone {
+     height: 241px;
+   }
 }
 @media screen and (min-width: 768px ) {
    html {
@@ -273,6 +296,12 @@ footer {
    .typ_nazev .checkmark:after {
      border: 0.3rem solid white;
    }
+   .pictur {
+     height: 344px;
+   }
+   #lastone {
+     height: 334px;
+   }
 }
 @media screen and (min-width: 992px ) {
    .typ_nazev {
@@ -284,10 +313,22 @@ footer {
      height: 1.25rem;
      width: 1.25rem;
    }
+   .pictur {
+     height: 224px;
+   }
+   #lastone {
+     height: 214px;
+   }
 }
 
 @media screen and (min-width: 1200px ) {
    .typ_nazev {
      min-width: 8.2rem;
+   }
+   .pictur {
+     height: 269px;
+   }
+   #lastone {
+     height: 259px;
    }
 }

@@ -69,6 +69,7 @@ $counter = 0;
   ?>
 </head>
 <body>
+
   <!-- tmavy/svetly vzhled toggle -->
 <a class="theme-toggle rounded-left" href="handler.php?theme=<?php echo $odkaz;?>" ><span class="oi oi-droplet" aria-hidden="true"></span></a>
 
@@ -119,7 +120,12 @@ $counter = 0;
       }
       ?>
     </div>
-   <div class="col-12 col-md-10 offset-md-1 col-lg-2 offset-lg-10 pl-lg-4 pr-lg-2 py-lg-2 pr-xl-3 pl-xl-3" ><button type="submit" class="sibmit col-12 py-2"><span class="color-main">Submit</span></button></div>
+   <div class="col-12 col-md-10 offset-md-1 col-lg-2 offset-lg-10 px-2 py-lg-2 btn-group" role="group">
+
+   <button type="reset" class="btn btn-primary col-3 col-sm-2 col-lg-4"><span class="oi oi-reload" aria-hidden="true"></span></button>
+     <button type="submit" class="btn sibmit col"><span class="color-main">Submit</span></button>
+   </div>
+
   </form>
 </div>
 
@@ -128,7 +134,7 @@ $counter = 0;
 if(isset($_GET['typ']) && isset($_GET['clovek'])) {
   //do nothing
 } else if(isset($_GET['clovek'])) {
-  echo "<h3 class='color-reverse'><strong>" . $humans_filter[$human-1]['jmeno'] . "'</strong>s pokemons:</h3>";
+  echo "<h3 class='color-reverse'><a class='notblue' href='trainer.php?trainer=" .$humans_filter[$human-1]['id'] . "'><strong>" . $humans_filter[$human-1]['jmeno'] . "</strong></a>'s pokemons:</h3>";
 }
 
 if(isset($_GET['search'])&& !empty($boi)&& !empty($pokemons)) {
@@ -167,13 +173,13 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 }
 ?>
 <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-2 id-<?php echo $pokemon['id'];?>">
-<div class="cardo bg-main rounded ">
-<a href="delete.php?delete=<?php echo $pokemon['id'] ?> "><span class="btns oi oi-x" title="Are you sure you want to delete this pokemon?" aria-hidden="true"></span></a>
-<a href="#"><span class="btns oi oi-pencil" title="edit" aria-hidden="true"></span></a>
+<div class="cardo bg-main">
+<a href="delete.php?delete=<?php echo $pokemon['id'] ?> "><span class="btns btn-1 oi oi-x" title="Are you sure you want to delete this pokemon?" aria-hidden="true"></span></a>
+<a href="edit.php?edit=<?php echo $pokemon['id']; ?>"><span class="btns btn-2 oi oi-pencil" title="edit" aria-hidden="true"></span></a>
 <a href="detail.php?pokeid=<?php echo $pokemon['id'];?>">
 <img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
 </a>
-<div class="content px-2 py-3 bg-accent rounded-bottom">
+<div class="content px-2 py-3 bg-accent">
 <h4 class="px-2 color-accent"><?php echo $pokemon['nazev'];?></h4>
 
 
@@ -198,13 +204,12 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 //karta pridani pokemona
   if ($counter+1 == count($pokemons)) {
   ?>  <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-2 ">
-    <div class="cardo bg-main rounded unique">
-    <a><span class="btns oi oi-pencil invisible" title="edit" aria-hidden="true"></span></a>
+    <div class="cardo bg-main unique">
     <a href="add.php">
-    <img class='mw-100 pictur' src='images/blank.png' alt='add pokemon'>
+    <img class='mw-100 pictur' id='lastone' src='images/blank.png' alt='add pokemon'>
     <span class="add-plus oi oi-plus "  aria-hidden="true"></span>
     <p class="add-text">Add pokemon</p>
-    <div class="content px-2 py-3 bg-accent invisible rounded-bottom">
+    <div class="content px-2 py-3 bg-accent invisible">
     <h4 class="px-2 color-accent">Add Pokemon</h4>
 
 
@@ -224,7 +229,7 @@ $counter = 0;
 </div>
   <footer class="container-fluid p-3 mt-2">
   <div class="row">
-    <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="traineradd.php">Add trainer</a></div>
+    <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="add.php">Add trainer</a></div>
     <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="add.php">Add pokemon</a></div>
     <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="index.php">Landpage</a></div>
   </div>

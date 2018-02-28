@@ -1,13 +1,13 @@
 body {
-  background-color: white;
+  background: url('images/background_pokemon.jpg');
+    background-size: cover;
+  background-position: center;
 }
 
-#root {}
-
-#landpage {
+#landpage {text-align: center;   
   width: 100vw;
   height: 100vh;
-  background: url('images/background_pokemon.jpg');
+  background:rgba(255,255,255,0.7);
   background-size: cover;
   background-position: center;
 }
@@ -19,44 +19,19 @@ body {
   height: auto;
 }
 
-input[type=search] {
-  border: 0.2vmin solid blue;
-  border-radius: 16px 0 0 16px;
-  box-shadow: inset -5px 7px 0px 0px rgba(0, 0, 0, 0.1);
-  display: inline-block;
-  height: 6vh;
-  float: left;
-  padding: 1vh 1vw;
-  outline: none;
-  width: 35vw;
-  transition: .5s;
-}
 
-#searchform {
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+#menu ul li a{color: darkblue; font-weight: 900;}
 
-#send {
-  border: 0.2vmin solid blue;
-  border-radius: 0 16px 16px 0;
-  float: left;
-  display: block;
-  height: 6vh;
-  font-size: 2em;
-  text-align: center;
-  background: blue;
-  color: white;
-  outline: none;
-  width: 3vw;
-  overflow: hidden;
-  transition: .5s;
-}
+#menu ul li a:hover{color:  black;}
 
-input[type=search]:focus {
-  width: 25vw;
-}
 
-input[type=search]:focus~#send {}
+
+
+
+
+
+
+
+
+
+

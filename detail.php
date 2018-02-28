@@ -3,11 +3,16 @@ require 'config.php';
 include_once 'header.php';
 echo '<link rel="stylesheet" type="text/css" href="vyp.css">';
 echo '<link rel="stylesheet" type="text/css" href="det.css">';
+$pokeid = $_GET['pokeid'];
+$pokeid = filter_input(INPUT_GET, 'pokeid', FILTER_VALIDATE_INT);
+if(!$pokeid) {
+  header("Location: 404.php");
+}
 $db = connection();
 
 $sql = 'SELECT * FROM pokemon where id = :id;';
 $stmt = $db->prepare($sql);
-$stmt->execute([':id' => $_GET['pokeid']]);
+$stmt->execute([':id' => $pokeid]);
 $pokemon = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>  <title>Pokemon - <?php echo $pokemon['nazev']; ?></title> <?php
@@ -24,7 +29,7 @@ $pokemon = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $sql4 = 'SELECT * FROM pokemon_clovek JOIN clovek ON clovek_id = clovek.id WHERE pokemon_id = :pokemon_id;';
 $stmt4 = $db->prepare($sql4);
-$stmt4->execute([':pokemon_id' => $_GET['pokeid']]);
+$stmt4->execute([':pokemon_id' => $pokeid]);
 $humans_filter = $stmt4->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
@@ -70,7 +75,7 @@ $humans_filter = $stmt4->fetchAll(PDO::FETCH_ASSOC);
       //  if(($human_filter['id']-1) % 6 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) { echo '<div class="row">';}
        ?>
          <div class="col-6 col-sm-4 col-md-3 col-lg-2 px-2  px-xl-1  mb-1 mt-1">
-           <a class="notblue" href="trainer.php?trainid=<?php echo $human_filter['id']; ?>">
+           <a class="notblue" href="trainer.php?trainer=<?php echo $human_filter['id']; ?>">
           <div class="human col-12 py-2 py-sm-2 py-md-1 bg-human" ><?php echo $human_filter['jmeno']; ?>
           </div>
         </a>
@@ -84,8 +89,8 @@ $humans_filter = $stmt4->fetchAll(PDO::FETCH_ASSOC);
   <div class="my-2">
 
   <a href="vypis.php"><button type="button" class="btn btn-accent my-1" name="button"><span class="oi oi-action-undo pr-1" aria-hidden="true"></span>Back</button></a>
-  <a href="edit.php"><button type="button" class="btn btn-primary my-1" name="button"><span class="oi oi-pencil pr-1" aria-hidden="true"></span>Edit</button></a>
-  <a href="delete.php?delete=<?php echo $_GET['pokeid'];?>"><button type="button" class="btn btn-danger my-1" name="button"><span class="oi oi-trash pr-1" aria-hidden="true"></span>Delete</button></a>
+  <a href="edit.php?edit=<?php echo $pokeid; ?>"><button type="button" class="btn btn-primary my-1" name="button"><span class="oi oi-pencil pr-1" aria-hidden="true"></span>Edit</button></a>
+  <a href="delete.php?delete=<?php echo $pokeid;?>"><button type="button" class="btn btn-danger my-1" name="button"><span class="oi oi-trash pr-1" aria-hidden="true"></span>Delete</button></a>
   </div>
 </div>
 <?php include_once 'footer.php'; ?>

@@ -2,6 +2,13 @@
   margin: 0;
   padding: 0;
 }
+.notblue {
+  color: var(--txt-accent);
+}
+.notblue:hover {
+  color: var(--txt-main);
+  text-decoration: none;
+}
 .theme-toggle {
   background: var(--btn-main);
   box-shadow: 0 0 10px var(--btns);
@@ -14,7 +21,6 @@
 }
 .theme-toggle span {
   opacity: 0.8;
-
 }
 .theme-toggle:hover {
   text-decoration: none;
@@ -22,6 +28,13 @@
 }
 .theme-toggle:hover span {
   opacity: 1;
+}
+.btn-accent {
+  background: var(--btn-accent);
+  color: white;
+}
+.btn-accent:hover {
+  background: var(--btn-hover);
 }
 .bgcolor-bug {
   background: #729f3f;
@@ -94,4 +107,11 @@
 .bgcolor-water {
   background: #4592c4;
   color: white;
+}
+footer {
+  background: var(--bg-darker);
+}
+.footerlink {
+  text-align: center;
+  font-size: 1.1rem;
 }

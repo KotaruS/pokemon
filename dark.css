@@ -15,4 +15,9 @@
   --btns: rgba(135, 134, 172, 0.6);
   --basic: #000;
   --reverse: #fff;
+  --brightness: brightness(115%);
+  --check-main: #369457;
+  --check-accent: #0e692e;
+  --check: #f3fff3;
+  --check-txt: #cafde4;
 }

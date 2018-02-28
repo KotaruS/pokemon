@@ -2,7 +2,6 @@
 
 mb_internal_encoding('UTF-8');
 
-session_start();
 
 define('DSN', 'mysql:host=localhost;dbname=pokedex;charset=utf8;');
 

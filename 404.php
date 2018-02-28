@@ -1,74 +1,31 @@
 <?php
 include_once 'header.php';
-?>  <title>Error 404</title>
-  <style>
-  #root {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 4em;
 
+?>
+<style>
+body {
+  background: var(--bg-body);
+}
+  h1 {
+    color: var(--txt-main);
+    font-size: 4rem;
   }
-  a {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 3em;
+  h2 {
+    color: var(--txt-accent);
+    font-size: 1.5rem;
+  }
 
-    text-decoration: none;
-  }
-  </style>
+</style>
+<title>Error 404</title>
+
 </head>
 <body>
-  <div id="root"><h1>Stránka není dostupná</h1></div>
-  <a href="index.php">Zpět</a>
+<a class="theme-toggle rounded-left" href="handler.php?theme=<?php echo $odkaz;?>" ><span class="oi oi-droplet" aria-hidden="true"></span></a>
 
-  <!-- Button trigger modal -->
-  <button type="button"  data-toggle="modal" data-target="#confirmation">
-    baaaaa
-  </button>
+<div class="container p-3">
 
-  <!-- Modal -->
-  <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="Title">Are you sure you want to do that?</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Confirm deletion</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    <!-- Button trigger modal -->
-    <button type="button"  data-toggle="modal" data-target="#confirmation1">
-      baaaaa
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="confirmation1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="Title">Are you sure you want that?</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <a href="vypis.php?id=2"><button type="button" class="btn btn-primary">Confirm deletion</button></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
+<h1>Error 404</h1>
+<h2>Stránka nebyla nalezena</h2>
+<a href="vypis.php"><button type="button" class="btn btn-accent my-1" name="button"><span class="oi oi-action-undo pr-1" aria-hidden="true"></span>Back</button></a>
+</div>
 <?php include_once 'footer.php'; ?>
