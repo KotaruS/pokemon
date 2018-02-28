@@ -1,6 +1,9 @@
 <?php
 require 'config.php';
 include_once 'header.php';
+if (isset($_GET['edit'])) {
+  echo '<link rel="stylesheet" type="text/css" href="trainedit.css">';
+}
 echo '<link rel="stylesheet" type="text/css" href="vyp.css">';
 echo '<link rel="stylesheet" type="text/css" href="train.css">';
 $gettrainer = filter_input(INPUT_GET, 'trainer', FILTER_VALIDATE_INT);
@@ -37,6 +40,16 @@ $stmt2 = $db->prepare($sql2);
 $stmt2->execute([
   ':clovek' => $gettrainer]);
 $pokemons = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+if (isset($_POST['jmeno'])&& isset($_POST['popis'])) {
+  $sql3 = 'UPDATE clovek SET jmeno = :name , popis_cloveka = :popis;';
+  $stmt = $db->prepare($sql3);
+  $stmt->execute([
+      ':name' => $_POST['jmeno'],
+      ':popis' => $_POST['popis']
+  ]);
+}
+
 ?>
 </head>
 <body>
@@ -46,8 +59,15 @@ $pokemons = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <?php if (isset($_GET['edit'])) { ?>
   <form class="" action="trainer.php?trainer=<?php echo $gettrainer; ?>" method="post">
 
-  </form>
-<input type="text" name="jmeno" value="<?php echo $human['jmeno'];?>">
+
+  <div class="form-group">
+    <label for="jmeno">Trainer name:</label>
+    <input type="text" id="jmeno" class="form-control bar-main" name="jmeno" value="<?php echo $human['jmeno'];?>">
+  </div>
+  <div class="form-group">
+    <label for="popis">Description:</label>
+    <textarea rows="5" id="popis" class="form-control bar-main" name="popis" ><?php echo $human['popis_cloveka']; ?></textarea>
+  </div>
 <?php } else { ?>
 
 
@@ -64,11 +84,21 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 }
 ?>
 <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-2 id-<?php echo $pokemon['id'];?>">
-<!-- TO DO <span class="delete oi oi-trash "  aria-hidden="true"></span> -->
+<?php if (isset($_GET['edit'])) { ?>
+
+<label class="label">
+<input type="checkbox" name="poke[]" class="d-none" value="<?php echo $pokemon['id'];?>">
+<span class="delete oi oi-trash "  aria-hidden="true"></span>
+
+<?php } ?>
 <div class="cardo bg-main">
-<a href="detail.php?pokeid=<?php echo $pokemon['id'];?>">
-<img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
-</a>
+  <?php if (isset($_GET['edit'])) { ?> <img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
+<?php } else {
+  ?>
+  <a href="detail.php?pokeid=<?php echo $pokemon['id'];?>">
+  <img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
+  </a>
+  <?php } ?>
 <div class="content px-2 py-3 bg-accent">
 <h4 class="px-2 color-accent"><?php echo $pokemon['nazev'];?></h4>
 
@@ -85,7 +115,14 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
     echo "<div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2 text-center p-0 rounded bgcolor-" . strtolower($type['nazev_typu']) . "'>" . $type['nazev_typu'] . "</div>" ;
   }
 //  echo "";
-  echo "</div></div></div></div>";
+  echo "</div></div></div>";
+  if (isset($_GET['edit'])) {
+  echo "</label>";
+}
+  echo "</div>";
+if (isset($_GET['edit'])) {
+  # DO nothing...
+} else {
 
 
    if ($counter+1 == count($pokemons)) {
@@ -104,6 +141,7 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 
    <?php    echo "</div></div></div></a></div>";
    }
+}
    if(($counter+1) % 4 == 0) {echo "</div>";}
     $counter++;
  }

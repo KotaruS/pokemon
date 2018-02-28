@@ -20,4 +20,8 @@
   --check-accent: #0e692e;
   --check: #f3fff3;
   --check-txt: #cafde4;
+  --danger-main: #943636;
+  --danger-accent: #690e0e;
+  --danger: #f3fff3;
+  --danger-txt: #fdcaca;
 }

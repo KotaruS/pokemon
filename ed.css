@@ -32,7 +32,7 @@ label {
   cursor: pointer;
 }
 input:checked ~ .cardo {
-  /* box-shadow: 0px 0px 20px 2px #5AEE00; */
+  filter: brightness(80%);
   border-radius: 0.75rem;
   background: var(--check-main);
   z-index: 5;
@@ -49,10 +49,11 @@ input:checked ~ .cardo .content .color-accent {
   transform-origin: center;
   transform: scale(1,1);
 }
-
+.cardo:hover {
+  box-shadow: 0 0 10px 0 var(--check-accent);
+}
 .check {
   position: absolute !important;
-  left: 0;
   padding: 28% 0 0 0;
   font-size: 10em;
   width: 100%;
@@ -71,6 +72,5 @@ input:checked ~ .cardo .content .color-accent {
 input:checked ~ .check {
   opacity: 0.9;
   visibility: visible;
-  /* filter: brightness(120%); */
   z-index: 6;
 }

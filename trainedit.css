@@ -1,0 +1,64 @@
+.form-group label {
+  font-size: 1.6em;
+  color: var(--txt-main);
+}
+.bar-main {
+  background: var(--bg-accent);
+  color: var(--txt-main);
+  border: none;
+  border-radius: 0.25rem !important;
+  transition: all 0.5s;
+}
+.bar-main:focus {
+  background: var(--bg-main);
+  color: var(--txt-main);
+  box-shadow: none;
+}
+label {
+  margin: 0;
+  cursor: pointer;
+}
+input:checked ~ .cardo {
+  filter: brightness(80%);
+  border-radius: 0.75rem;
+  background: var(--danger-main);
+  z-index: 5;
+  transform: scale(0.95,0.95);
+}
+input:checked ~ .cardo  .content {
+  background: var(--danger-accent);
+}
+input:checked ~ .cardo .content .color-accent {
+  color: var(--danger-txt);
+}
+.cardo {
+  z-index: 2;
+  transform-origin: center;
+  transform: scale(1,1);
+}
+.cardo:hover {
+  box-shadow: 0 0px 10px 0px var(--danger-accent);
+}
+.delete {
+  position: absolute !important;
+  padding: 28% 0 0 0;
+  font-size: 10em;
+  width: 100%;
+  height: 100%;
+  color: var(--danger);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 2;
+  text-align: center;
+  transition: 0.4s ease-in-out;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+input:checked ~ .delete {
+  opacity: 0.9;
+  visibility: visible;
+  /* filter: brightness(120%); */
+  z-index: 6;
+}
