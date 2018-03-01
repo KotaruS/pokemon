@@ -1,7 +1,7 @@
 <?php
 require 'config.php';
 include_once 'header.php';
-if (isset($_GET['edit'])) {
+if (isset($_GET['edit'])&& $_GET['edit']=='true') {
   echo '<link rel="stylesheet" type="text/css" href="trainedit.css">';
 }
 echo '<link rel="stylesheet" type="text/css" href="vyp.css">';
@@ -40,24 +40,46 @@ $stmt2 = $db->prepare($sql2);
 $stmt2->execute([
   ':clovek' => $gettrainer]);
 $pokemons = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+//desc and name edit
+if (isset($_GET['edit'])&& $_GET['edit']=='false') {
+
+
+if (isset($_POST['confirm'])) {
 
 if (isset($_POST['jmeno'])&& isset($_POST['popis'])) {
-  $sql3 = 'UPDATE clovek SET jmeno = :name , popis_cloveka = :popis;';
+  $sql3 = 'UPDATE clovek SET jmeno = :name , popis_cloveka = :popis WHERE id = :id;';
   $stmt = $db->prepare($sql3);
   $stmt->execute([
       ':name' => $_POST['jmeno'],
-      ':popis' => $_POST['popis']
+      ':popis' => $_POST['popis'],
+      ':id' => $gettrainer
   ]);
+ }
+//deletion
+ if (isset($_POST['del'])) {
+   # code...DELETE FROM pokemon_clovek WHERE (pokemon_id = 2 AND clovek_id = 2) AND (pokemon_id = 10 AND clovek_id = 2)
+   $delues = '';
+   $deles = $_POST['del'];
+   foreach ($deles as $del) {
+     $oddeleni = (($counter+1) == count($deles)) ? '' : ' OR ';
+     $delues .= '(pokemon_id = '. $del . ' AND clovek_id = ' . $gettrainer . ' )'. $oddeleni;
+     $counter++;
+   }
+   $sqld = 'DELETE FROM pokemon_clovek WHERE ' . $delues . ';';
+   $stmt = $db->prepare($sqld);
+   $stmt->execute();
+ } $counter = 0;
 }
-
+  header("Location: trainer.php?trainer=" . $gettrainer);
+}
 ?>
 </head>
 <body>
   <a class="theme-toggle rounded-left" href="handler.php?theme=<?php echo $odkaz;?>" ><span class="oi oi-droplet" aria-hidden="true"></span></a>
 <div class="container">
 
-<?php if (isset($_GET['edit'])) { ?>
-  <form class="" action="trainer.php?trainer=<?php echo $gettrainer; ?>" method="post">
+<?php if (isset($_GET['edit'])&& $_GET['edit']=='true') { ?>
+  <form class="" action="trainer.php?trainer=<?php echo $gettrainer; ?>&edit=false" method="post">
 
 
   <div class="form-group">
@@ -84,15 +106,15 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 }
 ?>
 <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-2 id-<?php echo $pokemon['id'];?>">
-<?php if (isset($_GET['edit'])) { ?>
+<?php if (isset($_GET['edit'])&& $_GET['edit']=='true') { ?>
 
 <label class="label">
-<input type="checkbox" name="poke[]" class="d-none" value="<?php echo $pokemon['id'];?>">
+<input type="checkbox" name="del[]" class="d-none" value="<?php echo $pokemon['id'];?>">
 <span class="delete oi oi-trash "  aria-hidden="true"></span>
 
 <?php } ?>
 <div class="cardo bg-main">
-  <?php if (isset($_GET['edit'])) { ?> <img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
+  <?php if (isset($_GET['edit'])&& $_GET['edit']=='true') { ?> <img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
 <?php } else {
   ?>
   <a href="detail.php?pokeid=<?php echo $pokemon['id'];?>">
@@ -116,11 +138,11 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
   }
 //  echo "";
   echo "</div></div></div>";
-  if (isset($_GET['edit'])) {
+  if (isset($_GET['edit'])&& $_GET['edit']=='true') {
   echo "</label>";
 }
   echo "</div>";
-if (isset($_GET['edit'])) {
+if (isset($_GET['edit'])&& $_GET['edit']=='true') {
   # DO nothing...
 } else {
 
@@ -151,9 +173,9 @@ if (isset($_GET['edit'])) {
 ?>
 
   <div class="buttons col-12 m-2">
-    <?php if (isset($_GET['edit'])) { ?>
+    <?php if (isset($_GET['edit'])&& $_GET['edit']=='true') { ?>
       <a href="trainer.php?trainer=<?php echo $gettrainer;?>"><button type="button" class="btn btn-danger my-1" name="button"><span class="oi oi-x pr-1" aria-hidden="true"></span>Abandon</button></a>
-      <button type="submit" class="btn btn-success my-1" name="button"><span class="oi oi-check pr-1" aria-hidden="true"></span>Save</button>
+      <button type="submit" class="btn btn-success my-1" name="confirm"><span class="oi oi-check pr-1" aria-hidden="true"></span>Save</button>
     </form>
   <?php } else { ?>
   <a href="vypis.php"><button type="button" class="btn btn-accent my-1" name="button"><span class="oi oi-action-undo pr-1" aria-hidden="true"></span>Back</button></a>

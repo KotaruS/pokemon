@@ -78,7 +78,7 @@ $counter = 0;
 <div class="row bg-filters rounded-bottom py-1 mb-4">
   <form method="get" class="col-12 p-3">
    <div class="input-group col-lg-11 mx-auto">
-    <input class="searchbar-main form-control" type="search" name="search" placeholder="Search for pokemon..." autocomplete="off" ><span class="search-icon oi oi-magnifying-glass" aria-hidden="true"></span>
+    <input class="searchbar-main form-control" type="search" name="search" placeholder="Search for pokémon..." autocomplete="off" ><span class="search-icon oi oi-magnifying-glass" aria-hidden="true"></span>
    </div>
   </form>
   <form class="row m-0 p-2">
@@ -134,7 +134,7 @@ $counter = 0;
 if(isset($_GET['typ']) && isset($_GET['clovek'])) {
   //do nothing
 } else if(isset($_GET['clovek'])) {
-  echo "<h3 class='color-reverse'><a class='notblue' href='trainer.php?trainer=" .$humans_filter[$human-1]['id'] . "'><strong>" . $humans_filter[$human-1]['jmeno'] . "</strong></a>'s pokemons:</h3>";
+  echo "<h3 class='color-reverse'><a class='notblue' href='trainer.php?trainer=" .$humans_filter[$human-1]['id'] . "'><strong>" . $humans_filter[$human-1]['jmeno'] . "</strong></a>'s collection:</h3>";
 }
 
 if(isset($_GET['search'])&& !empty($boi)&& !empty($pokemons)) {
@@ -143,12 +143,12 @@ if(isset($_GET['search'])&& !empty($boi)&& !empty($pokemons)) {
 
 if(empty($pokemons)&& isset($_GET['search'])) {
 ?>  <div class="alert alert-danger" role="alert">
-    Unfortunately there is no pokemon with name '<?php echo $boi;?>'</div>
+    Unfortunately there is no pokémon with name '<?php echo $boi;?>'</div>
 <?php }
 
 if(empty($pokemons)&& isset($_GET['typ'])) { ?>
   <div class="alert alert-danger" role="alert">
-    Unfortunately there is no pokemon with type<?php if((count($typus)) <= 1) {echo ': ';} else {echo 's: ';}?>
+    Unfortunately there is no pokémon with type<?php if((count($typus)) <= 1) {echo ': ';} else {echo 's: ';}?>
 <?php
 
 foreach ($types_filter as $type) {
@@ -208,13 +208,13 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
     <a href="add.php">
     <img class='mw-100 pictur' id='lastone' src='images/blank.png' alt='add pokemon'>
     <span class="add-plus oi oi-plus "  aria-hidden="true"></span>
-    <p class="add-text">Add pokemon</p>
+    <p class="add-text">Add pokémon</p>
     <div class="content px-2 py-3 bg-accent invisible">
-    <h4 class="px-2 color-accent">Add Pokemon</h4>
+    <h4 class="px-2 color-accent">Add Pokémon</h4>
 
 
       <div class="row m-0">
-      <div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2 bgcolor-fairy text-center p-0 rounded'>aaaa </div>
+      <div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2 bgcolor-fairy text-center p-0 rounded'>empty</div>
 
   <?php    echo "</div></div></div></a></div>";
   }
@@ -230,7 +230,7 @@ $counter = 0;
   <footer class="container-fluid p-3 mt-2">
   <div class="row">
     <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="add.php">Add trainer</a></div>
-    <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="add.php">Add pokemon</a></div>
+    <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="add.php">Add pokémon</a></div>
     <div class="col-12 col-sm-6 col-md-4 footerlink"><a href="index.php">Landpage</a></div>
   </div>
   </footer>

@@ -30,6 +30,7 @@ input:checked ~ .cardo  .content {
 }
 input:checked ~ .cardo .content .color-accent {
   color: var(--danger-txt);
+  filter: brightness(120%);
 }
 .cardo {
   z-index: 2;
