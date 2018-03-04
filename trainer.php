@@ -114,11 +114,11 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 
 <?php } ?>
 <div class="cardo bg-main">
-  <?php if (isset($_GET['edit'])&& $_GET['edit']=='true') { ?> <img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
+  <?php if (isset($_GET['edit'])&& $_GET['edit']=='true') { ?> <img class='mw-100 pictur' src='<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
 <?php } else {
   ?>
   <a href="detail.php?pokeid=<?php echo $pokemon['id'];?>">
-  <img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
+  <img class='mw-100 pictur' src='<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
   </a>
   <?php } ?>
 <div class="content px-2 py-3 bg-accent">

@@ -69,7 +69,7 @@ if($counter % 4 == 0) {
 <input type="checkbox" name="poke[]" class="d-none" value="<?php echo $pokemon['id'];?>">
 <span class="check oi oi-check "  aria-hidden="true"></span>
 <div class="cardo bg-main">
-<img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
+<img class='mw-100 pictur' src='<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
 
 <div class="content px-2 py-3 bg-accent">
 <h4 class="px-2 color-accent"><?php echo $pokemon['nazev'];?></h4>

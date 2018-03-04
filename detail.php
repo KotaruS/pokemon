@@ -39,7 +39,7 @@ $humans_filter = $stmt4->fetchAll(PDO::FETCH_ASSOC);
 <div class="container">
   <div class="section row mt-0 mb-2 mt-sm-5">
     <div class="sidebar col-12 col-lg-4">
-      <img src="images/<?php echo $pokemon['obrazek'];?>" class="mw-100" alt="pokemon">
+      <img src="<?php echo $pokemon['obrazek'];?>" class="mw-100" alt="pokemon">
     </div>
      <div class="description col-12 col-lg-8">
        <h1><?php echo $pokemon['nazev'];?></h1>

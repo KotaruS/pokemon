@@ -16,16 +16,13 @@
 }
 .description h1 {
   padding-bottom: 0.5rem;
-  color: var(--txt-main);
 }
 .description h3 {
   padding-bottom: 0.25rem;
-  color: var(--txt-main);
 }
 .section h4 {
   padding-bottom: 0.5rem;
   display: block;
-  color: var(--txt-main);
 }
 .description p {
   color: var(--txt-accent);

@@ -152,28 +152,55 @@ body {
 .searchbar-main {
   background: var(--bg-accent);
   color: var(--txt-main);
-  padding-right: 2rem;
   border: none;
-  border-radius: 0.25rem !important;
-  transition: all 0.5s;
+  border-top-left-radius: 0.5rem !important;
+  border-bottom-left-radius: 0.5rem ;
+  transition: all 0.5s 0.2s;
 }
 .searchbar-main:focus {
   background: var(--bg-main);
   color: var(--txt-main);
   box-shadow: none;
+  transition: all 0.5s;
+}
+.appender {
+  background: var(--bg-accent);
+  color: var(--txt-main);
+  border: none;
+  margin-left: -1px;
+  border-top-right-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important ;
+  border-radius: 0;
+  transition: all 0.5s 0.2s;
+}
+.appender::before {
+  content: 'Search';
+  position: absolute;
+  padding: 0 0.3rem;
+  overflow-x: hidden;
+  display: inline-flex;
+  right: 0;
+  opacity: 0;
+  transition: all 0.5s 0.2s, opacity 0.3s 0.1s;
+}
+.searchbar-main:focus + .appender {
+  transition: all 0.5s 0s;
+  color: var(--txt-main);
+  box-shadow: none;
+  padding-left: 4.2rem;
+}
+.searchbar-main:focus + .appender::before {
+  right: 3rem;
+  opacity: 1;
+  content: 'Search';
+  transition: all 0.5s, opacity 0.2s 0.2s ;
 }
 .search-icon {
   color: var(--txt-main);
   border: none;
   box-shadow: none;
-  right: 1.5rem;
   z-index: 3;
   transition: all 0.5s;
-}
-
-.oi-magnifying-glass {
-  position: absolute;
-  top:0.55rem;
 }
 .lidi {
   min-width: 7rem;

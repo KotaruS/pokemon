@@ -15,7 +15,7 @@ $counter = 0;
         $typus = $_GET['typ'];
         $typek = implode(',', $typus);
 
-        $sql = 'SELECT pokemon.id, pokemon.nazev, pokemon.popis, pokemon.obrazek, GROUP_CONCAT(typ_id ORDER BY typ_id ASC) as type FROM `pokemon_typ` JOIN pokemon ON pokemon_id = pokemon.id GROUP BY pokemon_id HAVING type LIKE :type OR type LIKE :type1 OR type LIKE :type2;';
+        $sql = 'SELECT pokemon.id, pokemon.nazev, pokemon.popis, pokemon.obrazek, GROUP_CONCAT(typ_id ORDER BY typ_id ASC) as type FROM `pokemon_typ` JOIN pokemon ON pokemon_id = pokemon.id GROUP BY pokemon_id HAVING type LIKE :type OR type LIKE :type1 OR type LIKE :type2';
         $stmt = $db->prepare($sql);
         $stmt->execute([
           ':type' => '%,' . $typek,
@@ -40,7 +40,7 @@ $counter = 0;
         $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
       } else {
 
-      $sql = 'SELECT * FROM pokemon;';
+      $sql = 'SELECT * FROM pokemon';
       $stmt = $db->prepare($sql);
       $stmt->execute();
       $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -78,7 +78,10 @@ $counter = 0;
 <div class="row bg-filters rounded-bottom py-1 mb-4">
   <form method="get" class="col-12 p-3">
    <div class="input-group col-lg-11 mx-auto">
-    <input class="searchbar-main form-control" type="search" name="search" placeholder="Search for pokémon..." autocomplete="off" ><span class="search-icon oi oi-magnifying-glass" aria-hidden="true"></span>
+    <input class="searchbar-main form-control" type="search" name="search" placeholder="Search for pokémon..." autocomplete="off" >
+
+    <button class="btn appender" type="submit"><span class="search-icon oi oi-magnifying-glass" aria-hidden="true"></span></button>
+
    </div>
   </form>
   <form class="row m-0 p-2">
@@ -131,6 +134,10 @@ $counter = 0;
 
 <?php
 // vypis
+$ssss = (count($pokemons)==1) ? '' : 's' ;
+if (!empty($pokemons)) {
+  echo '<h5>' . count($pokemons) . ' result' . $ssss .'</h5>';
+}
 if(isset($_GET['typ']) && isset($_GET['clovek'])) {
   //do nothing
 } else if(isset($_GET['clovek'])) {
@@ -177,7 +184,7 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 <a href="delete.php?delete=<?php echo $pokemon['id'] ?> "><span class="btns btn-1 oi oi-x" title="Are you sure you want to delete this pokemon?" aria-hidden="true"></span></a>
 <a href="edit.php?edit=<?php echo $pokemon['id']; ?>"><span class="btns btn-2 oi oi-pencil" title="edit" aria-hidden="true"></span></a>
 <a href="detail.php?pokeid=<?php echo $pokemon['id'];?>">
-<img class='mw-100 pictur' src='images/<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
+<img class='mw-100 pictur' src='<?php echo $pokemon['obrazek']; ?>' alt='pokemon-<?php echo strtolower($pokemon['nazev']);  ?>'>
 </a>
 <div class="content px-2 py-3 bg-accent">
 <h4 class="px-2 color-accent"><?php echo $pokemon['nazev'];?></h4>
@@ -202,8 +209,11 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 
 //konec jednotlive karty
 //karta pridani pokemona
-  if ($counter+1 == count($pokemons)) {
-  ?>  <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-2 ">
+
+
+  // if (($counter+1) == count($pokemons)) {
+   ?>
+    <!-- <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-2 ">
     <div class="cardo bg-main unique">
     <a href="add.php">
     <img class='mw-100 pictur' id='lastone' src='images/blank.png' alt='add pokemon'>
@@ -214,10 +224,14 @@ if($counter % 4 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) {
 
 
       <div class="row m-0">
-      <div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2 bgcolor-fairy text-center p-0 rounded'>empty</div>
+      <div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2 bgcolor-fairy text-center p-0 rounded'>empty</div> -->
 
-  <?php    echo "</div></div></div></a></div>";
-  }
+  <?php
+     // echo "</div></div></div></a></div>";
+  // }
+
+
+  // important shit bez toho nefunguje radkovani
   if(($counter+1) % 4 == 0) {echo "</div>";}
    $counter++;
 }
