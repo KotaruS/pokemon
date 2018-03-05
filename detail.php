@@ -38,7 +38,7 @@ if (isset($_GET['edit'])&& $_GET['edit']=='false') {
 
 
   if (isset($_POST['confirm'])) {
-
+    #pokud je nastaveno jmeno a popis
   if (isset($_POST['name'])&& isset($_POST['popis'])) {
     $sqlc = 'UPDATE pokemon SET nazev = :name, popis = :popis WHERE id = :id; ';
     $stmt = $db->prepare($sqlc);
@@ -48,6 +48,7 @@ if (isset($_GET['edit'])&& $_GET['edit']=='false') {
         ':id' => $pokeid
     ]);
   }
+  #pokud se obe hodnoty rovnaji 0 atd..
   if (isset($_POST['typ1']) && isset($_POST['typ2']) && $_POST['typ1']==0 && $_POST['typ2']==0) {
     # DO nothing...
   } else if (isset($_POST['typ1']) && $_POST['typ1']==0 && isset($_POST['typ2insert']) && $_POST['typ2insert']==0) {
