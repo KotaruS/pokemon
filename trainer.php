@@ -96,7 +96,32 @@ if (isset($_POST['jmeno'])&& isset($_POST['popis'])) {
 <h1><?php echo $human['jmeno']; ?></h1>
 <p><?php echo $human['popis_cloveka']; ?></p>
 
-<?php } ?>
+<?php }
+
+if (empty($pokemons)) {
+  ?>
+  <h2>You don't have any pokémon</h2>
+  <div class="row">
+
+
+  <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-2 ">
+    <div class="cardo bg-main unique">
+    <a href="edit.php?trainer=<?php echo $gettrainer;?>">
+    <img class='mw-100 pictur' id='lastone' src='images/blank.png' alt='add pokemon'>
+    <span class="add-plus oi oi-plus "  aria-hidden="true"></span>
+    <p class="add-text">Add pokemon</p>
+    <div class="content px-2 py-3 bg-accent invisible">
+    <h4 class="px-2 color-accent">Add Pokemon</h4>
+
+
+      <div class="row m-0">
+      <div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2 bgcolor-fairy text-center p-0 rounded'>aaaa </div>
+      </div>
+  <?php    echo "</div></div></div></a></div>";
+} else {
+
+
+?>
 <h2><?php echo $human['jmeno']; ?>'s collection</h2>
 <?php
 foreach ($pokemons as $pokemon) {
@@ -168,8 +193,8 @@ if (isset($_GET['edit'])&& $_GET['edit']=='true') {
     $counter++;
  }
  $counter = 0;
-
-
+#konec else podminky
+}
 ?>
 
   <div class="buttons col-12 m-2">

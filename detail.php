@@ -3,6 +3,7 @@ require 'config.php';
 include_once 'header.php';
 echo '<link rel="stylesheet" type="text/css" href="vyp.css">';
 echo '<link rel="stylesheet" type="text/css" href="det.css">';
+echo '<link rel="stylesheet" type="text/css" href="pokedit.css">';
 $pokeid = $_GET['pokeid'];
 $pokeid = filter_input(INPUT_GET, 'pokeid', FILTER_VALIDATE_INT);
 if(!$pokeid) {
@@ -22,16 +23,88 @@ $pokemon = $stmt->fetch(PDO::FETCH_ASSOC);
 // $poketypes = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 //
 //
-// $sql3 = 'SELECT * FROM typ;';
-// $stmt3 = $db->prepare($sql3);
-// $stmt3->execute();
-// $types_filter = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+$sql1 = 'SELECT * FROM `pokemon_typ` JOIN typ ON pokemon_typ.typ_id = typ.id WHERE pokemon_id = :id;';
+$stmt = $db->prepare($sql1);
+$stmt->execute([':id' => $pokemon['id']]);
+$types = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $sql4 = 'SELECT * FROM pokemon_clovek JOIN clovek ON clovek_id = clovek.id WHERE pokemon_id = :pokemon_id;';
-$stmt4 = $db->prepare($sql4);
-$stmt4->execute([':pokemon_id' => $pokeid]);
-$humans_filter = $stmt4->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $db->prepare($sql4);
+$stmt->execute([':pokemon_id' => $pokeid]);
+$humans_filter = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+if (isset($_GET['edit'])&& $_GET['edit']=='false') {
+
+
+
+  if (isset($_POST['confirm'])) {
+
+  if (isset($_POST['name'])&& isset($_POST['popis'])) {
+    $sqlc = 'UPDATE pokemon SET nazev = :name, popis = :popis WHERE id = :id; ';
+    $stmt = $db->prepare($sqlc);
+    $stmt->execute([
+        ':name' => $_POST['name'],
+        ':popis' => $_POST['popis'],
+        ':id' => $pokeid
+    ]);
+  }
+  if (isset($_POST['typ1']) && isset($_POST['typ2']) && $_POST['typ1']==0 && $_POST['typ2']==0) {
+    # DO nothing...
+  } else if (isset($_POST['typ1']) && $_POST['typ1']==0 && isset($_POST['typ2insert']) && $_POST['typ2insert']==0) {
+    # DO nothing...
+  } else if (isset($_POST['typ2'])&& $_POST['typ2']==0) {
+    $sqlt1 = 'DELETE FROM pokemon_typ WHERE pokemon_id = :poke_id AND typ_id = :typ';
+    $stmt = $db->prepare($sqlt1);
+    $stmt->execute([
+      ':typ' => $types[1]['typ_id'],
+      ':poke_id' => $pokeid
+    ]);
+  } else if (isset($_POST['typ1'])&& $_POST['typ1']==0) {
+    $sqlt1 = 'DELETE FROM pokemon_typ WHERE pokemon_id = :poke_id AND typ_id = :typ';
+    $stmt = $db->prepare($sqlt1);
+    $stmt->execute([
+      ':typ' => $types[0]['typ_id'],
+      ':poke_id' => $pokeid
+    ]);
+  }
+  if (isset($_POST['typ2'])&& $_POST['typ2']!=0) {
+    $sqlt2 = 'UPDATE pokemon_typ SET typ_id = :typ WHERE pokemon_id = :poke_id AND typ_id = :typcurr ';
+    $stmt = $db->prepare($sqlt2);
+    $stmt->execute([
+        ':typ' => $_POST['typ2'],
+        ':poke_id' => $pokeid,
+        ':typcurr' => $types[1]['typ_id']
+    ]);
+  }
+  if (isset($_POST['typ1'])&& $_POST['typ1']!=0) {
+
+    $sqlt1 = 'UPDATE pokemon_typ SET typ_id = :typ WHERE pokemon_id = :poke_id AND typ_id = :typcurr ';
+    $stmt = $db->prepare($sqlt1);
+    $stmt->execute([
+      ':typ' => $_POST['typ1'],
+      ':poke_id' => $pokeid,
+      ':typcurr' => $types[0]['typ_id']
+    ]);
+  }
+
+  else if (isset($_POST['typ2insert'])&& $_POST['typ2insert']==0) {
+    # DO nothing...
+  }
+  if (isset($_POST['typ2insert'])&& $_POST['typ2insert']!=0) {
+
+    $sqlt2i = 'INSERT INTO pokemon_typ (pokemon_id, typ_id) VALUES (:poke_id, :typ) ';
+    $stmt = $db->prepare($sqlt2i);
+    $stmt->execute([
+      ':poke_id' => $pokeid,
+      ':typ' => $_POST['typ2insert']
+    ]);
+  }
+
+
+
+ }
+ header('Location: detail.php?pokeid=' . $pokeid);
+}
 ?>
 </head>
 <body>
@@ -42,23 +115,88 @@ $humans_filter = $stmt4->fetchAll(PDO::FETCH_ASSOC);
       <img src="<?php echo $pokemon['obrazek'];?>" class="mw-100" alt="pokemon">
     </div>
      <div class="description col-12 col-lg-8">
+       <?php if (isset($_GET['edit'])&& $_GET['edit']=='true') {
+         ?>
+         <form class="" action="detail.php?pokeid=<?php echo $pokeid; ?>&edit=false" method="post">
+
+
+         <div class="form-group">
+           <label for="name">Pokémon name:</label>
+           <input type="text" id="name" class="form-control bar-main" name="name" value="<?php echo $pokemon['nazev'];?>">
+         </div>
+         <div class="form-group">
+           <label for="popis">Bio:</label>
+           <textarea rows="4" id="popis" class="form-control bar-main" name="popis" ><?php echo $pokemon['popis']; ?></textarea>
+         </div>
+
+       <?php } else {?>
        <h1><?php echo $pokemon['nazev'];?></h1>
        <h3>Bio</h3>
        <p><?php echo $pokemon['popis'];?></p>
+     <?php } ?>
        <h3>Types</h3>
        <div class="row mx-0 my-3">
 
-       <?php $sql1 = 'SELECT nazev_typu FROM `pokemon_typ` JOIN typ ON pokemon_typ.typ_id = typ.id WHERE pokemon_id = :id;';
-       $stmt1 = $db->prepare($sql1);
-       $stmt1->execute([':id' => $pokemon['id']]);
-       $types = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+       <?php
+
+
+       if (isset($_GET['edit'])&& $_GET['edit']=='true') {
+
+       $sql2 = 'SELECT * FROM typ';
+       $stmt = $db->prepare($sql2);
+       $stmt->execute();
+       $alltypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+       $numberplus = 0;
+
+       foreach ($types as $type) {
+
+
+         ?><div class="form-group ml-2">
+
+           <select class="custom-select selecttype" name="typ<?php echo $numberplus+1;?>">
+             <option value="0">None</option>
+             <?php foreach ($alltypes as $alltype) {
+               $selected = ($type['id']==$alltype['id']) ? 'selected' : '' ;
+               echo "<option value='" . $alltype['id'] . "'". $selected . ">" . $alltype['nazev_typu'] . "</option>";
+             } ?>
+          </select>
+         </div>
+
+         <?php
+         $numberplus++;
+      }
+      if (count($types)<2) {
+        ?>
+        <div class="form-group ml-2">
+
+          <select class="custom-select selecttype" name="typ2insert">
+            <option value="0">None</option>
+            <?php foreach ($alltypes as $alltype) {
+
+              echo "<option value='" . $alltype['id'] . "'>" . $alltype['nazev_typu'] . "</option>";
+            } ?>
+         </select>
+        </div>
+
+
+        <?php
+      }
+
+    } else {
+
+
+
        foreach ($types as $type) {
          //echo $type['nazev_typu'];
          //var_dump($type);
          echo "<div class='col-3 col-sm-2 ml-2 text-center p-0 rounded bgcolor-" . strtolower($type['nazev_typu']) . "'>" . $type['nazev_typu'] . "</div>" ;
-       }?>
+       }
+    }   ?>
       </div>
      </div>
+<?php if (!isset($_GET['edit'])) {
+
+?>
      <div class="footerino py-2 col-12">
      <?php if (!empty($humans_filter)) {
      ?><h4>This Pokémon is owned by:</h4>
@@ -85,12 +223,19 @@ $humans_filter = $stmt4->fetchAll(PDO::FETCH_ASSOC);
 <?php }?>
   </div>
     </div>
+
+  <?php } ?>
   </div>
   <div class="my-2">
-
+    <?php if (isset($_GET['edit'])&& $_GET['edit']=='true') { ?>
+      <a href="detail.php?pokeid=<?php echo $pokeid;?>"><button type="button" class="btn btn-danger my-1" name="button"><span class="oi oi-x pr-1" aria-hidden="true"></span>Abandon</button></a>
+      <button type="submit" class="btn btn-success my-1" name="confirm"><span class="oi oi-check pr-1" aria-hidden="true"></span>Save</button>
+    </form>
+  <?php } else { ?>
   <a href="vypis.php"><button type="button" class="btn btn-accent my-1" name="button"><span class="oi oi-action-undo pr-1" aria-hidden="true"></span>Back</button></a>
-  <a href="edit.php?edit=<?php echo $pokeid; ?>"><button type="button" class="btn btn-primary my-1" name="button"><span class="oi oi-pencil pr-1" aria-hidden="true"></span>Edit</button></a>
+  <a href="detail.php?pokeid=<?php echo $pokeid; ?>&edit=true"><button type="button" class="btn btn-primary my-1" name="button"><span class="oi oi-pencil pr-1" aria-hidden="true"></span>Edit</button></a>
   <a href="delete.php?delete=<?php echo $pokeid;?>"><button type="button" class="btn btn-danger my-1" name="button"><span class="oi oi-trash pr-1" aria-hidden="true"></span>Delete</button></a>
+  <?php } ?>
   </div>
 </div>
 <?php include_once 'footer.php'; ?>

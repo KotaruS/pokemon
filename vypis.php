@@ -86,7 +86,12 @@ $counter = 0;
   </form>
   <form class="row m-0 p-2">
 
-  <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 ">
+    <?php if (count($humans_filter)>3) { ?>
+      <div class="col-12 col-sm-12 col-md-12">
+    <?php } else { ?>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 ">
+    <?php } ?>
+
     <h3 class="p-1 color-main">Types:</h3><div class="w-100"></div>
     <?php foreach ($types_filter as $type_filter)
      {
@@ -106,13 +111,33 @@ $counter = 0;
    $counter = 0;
      ?>
    </div>
-   <div class="row col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 m-0">
+
+
+   <?php if (count($humans_filter)>3) { ?>
+    <div class="row col-12 col-sm-12 col-md-12 m-0">
+
+   <?php } else { ?>
+
+     <div class="row col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 m-0">
+
+   <?php } ?>
+
+
      <h3 class="p-1 color-main">Trainers:</h3><div class="w-100"></div>
      <?php foreach ($humans_filter as $human_filter)
       {
     //  if(($human_filter['id']-1) % 6 == 0  /*&& count($pokemons) - ($numba+4) !== 0*/) { echo '<div class="row">';}
      ?>
-       <div class="lidi col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 px-0 px-md-2 px-xl-1 mx-0 mb-1 mt-1">
+
+     <?php if (count($humans_filter)>3) { ?>
+      <div class="lidi col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 px-0 px-md-2 px-xl-1 mx-0 mb-1 mt-1">
+
+   <?php } else { ?>
+
+     <div class="lidi col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 px-0 px-md-2 px-xl-1 mx-0 mb-1 mt-1">
+
+   <?php } ?>
+
         <label class="typ_nazev col-12 py-2 py-sm-2 py-md-1 bg-human" ><?php echo $human_filter['jmeno']; ?>
         <input type="radio" name="clovek" value="<?php echo $human_filter['id']; ?>">
         <span class="checkmark"></span>
@@ -132,6 +157,10 @@ $counter = 0;
   </form>
 </div>
 
+
+
+
+
 <?php
 // vypis
 $ssss = (count($pokemons)==1) ? '' : 's' ;
@@ -141,7 +170,29 @@ if (!empty($pokemons)) {
 if(isset($_GET['typ']) && isset($_GET['clovek'])) {
   //do nothing
 } else if(isset($_GET['clovek'])) {
-  echo "<h3 class='color-reverse'><a class='notblue' href='trainer.php?trainer=" .$humans_filter[$human-1]['id'] . "'><strong>" . $humans_filter[$human-1]['jmeno'] . "</strong></a>'s collection:</h3>";
+  if (empty($pokemons)) {
+    ?>
+    <h2><a class='notblue' href='trainer.php?trainer=<?php echo $humans_filter[$human-1]['id'] ; ?>'><strong><?php echo $humans_filter[$human-1]['jmeno'] ;?></strong></a> doesn't have any pokémon</h2>
+    <div class="row">
+
+
+    <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 m-0 p-2 ">
+      <div class="cardo bg-main unique">
+      <a href="edit.php?trainer=<?php echo $humans_filter[$human-1]['id'];?>">
+      <img class='mw-100 pictur' id='lastone' src='images/blank.png' alt='add pokemon'>
+      <span class="add-plus oi oi-plus "  aria-hidden="true"></span>
+      <p class="add-text">Add pokemon</p>
+      <div class="content px-2 py-3 bg-accent invisible">
+      <h4 class="px-2 color-accent">Add Pokemon</h4>
+
+
+        <div class="row m-0">
+        <div class='col-3 col-sm-4 col-md-4 col-lg-4 col-xl-4 ml-2 bgcolor-fairy text-center p-0 rounded'>aaaa </div>
+        </div>
+    <?php    echo "</div></div></div></a></div>";
+  } else {  echo "<h3 class='color-reverse'><a class='notblue' href='trainer.php?trainer=" . $humans_filter[$human-1]['id'] . "'><strong>" . $humans_filter[$human-1]['jmeno'] . "</strong></a>'s collection:</h3>";
+}
+
 }
 
 if(isset($_GET['search'])&& !empty($boi)&& !empty($pokemons)) {

@@ -3,17 +3,29 @@
   color: var(--txt-main);
 }
 .bar-main {
-  background: var(--bg-accent);
-  color: var(--txt-main);
+  background: var(--bg-main);
+  color: var(--txt-accent);
   border: none;
   resize: none;
   border-radius: 0.25rem !important;
   transition: all 0.5s;
 }
 .bar-main:focus {
-  background: var(--bg-main);
+  background: var(--bg-darker);
   color: var(--txt-main);
   box-shadow: none;
+}
+.selecttype {
+  background-color: var(--bg-main) !important;
+  background-image: var(--select);
+  border-color: var(--txt-main);
+  color: var(--txt-accent);
+  border-radius: 0.5rem;
+  transition: all 0.5s;
+}
+.selecttype:focus {
+  background-color: var(--bg-darker) !important;
+  color: var(--txt-main) !important;
 }
 label {
   margin: 0;
